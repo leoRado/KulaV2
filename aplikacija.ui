@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Aplikacija</class>
+ <widget class="QMainWindow" name="Aplikacija">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>668</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Algovertor v1.0</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>130</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Komponente</string>
+      </property>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok Start</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>570</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Povezi</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok Stop</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok Ulaz</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok Izlaz</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>190</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok Obrada</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>230</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok Uslov</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_8">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>270</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok Cvor</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGraphicsView" name="graphicsView">
+      <property name="backgroundBrush">
+       <brush brushstyle="CrossPattern">
+        <color alpha="255">
+         <red>225</red>
+         <green>225</green>
+         <blue>225</blue>
+        </color>
+       </brush>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDatoteka">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuSacuvaj_dokument_kao">
+     <property name="title">
+      <string>Sacuvaj dokument kao</string>
+     </property>
+     <addaction name="actionSVG_slika"/>
+    </widget>
+    <addaction name="actionNovi_dokument"/>
+    <addaction name="actionOtvori_dokument"/>
+    <addaction name="actionSacuvaj"/>
+    <addaction name="separator"/>
+    <addaction name="actionSacuvaj_kod"/>
+    <addaction name="menuSacuvaj_dokument_kao"/>
+    <addaction name="separator"/>
+    <addaction name="actionIzlaz"/>
+   </widget>
+   <addaction name="menuDatoteka"/>
+  </widget>
+  <action name="actionSacuvaj">
+   <property name="text">
+    <string>Sacuvaj dokument</string>
+   </property>
+  </action>
+  <action name="actionOtvori_dokument">
+   <property name="text">
+    <string>Otvori dokument</string>
+   </property>
+  </action>
+  <action name="actionNovi_dokument">
+   <property name="text">
+    <string>Novi dokument</string>
+   </property>
+  </action>
+  <action name="actionSacuvaj_kod">
+   <property name="text">
+    <string>Sacuvaj kod</string>
+   </property>
+  </action>
+  <action name="actionSVG_slika">
+   <property name="text">
+    <string>SVG slika</string>
+   </property>
+  </action>
+  <action name="actionIzlaz">
+   <property name="text">
+    <string>Izlaz</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
