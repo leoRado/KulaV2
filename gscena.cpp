@@ -20,6 +20,7 @@
 #include "bizlaz.h"
 #include "bobrada.h"
 #include "buslov.h"
+#include "bfor.h"
 #include "bcvor.h"
 
 GScena::GScena(QObject *parent) : QGraphicsScene(parent)
@@ -44,7 +45,7 @@ void GScena::setStart()
 
 void GScena::setStop()
 {
-    this->_blokHolder=new BStop("Stop"+brojac);
+    this->_blokHolder=new BStop("StopB"+brojac);
 }
 
 void GScena::setUlaz()
@@ -72,6 +73,11 @@ void GScena::setCvor()
     this->_blokHolder=new BCvor("Cvor"+brojac);
 }
 
+void GScena::setFor()
+{
+    this->_blokHolder=new BFor("For"+brojac);
+}
+
 void GScena::obradiListu()
 {
     /*
@@ -88,6 +94,80 @@ void GScena::obradiListu()
             //Dakle za obradu liste koristi se metoda items()
         }
         */
+}
+
+QString GScena::getKod()
+{
+    QString _kod;  //Tu ce da bude smesten kod
+
+    //==== Korak 1 - Pretraga za blokom Start ====
+    AbstractBlok* _pocetak=NULL;
+    AbstractBlok* _pom=NULL;
+
+    foreach(QGraphicsItem* item, items())
+        {
+            if(item->type()!=QGraphicsLineItem::Type)
+                {
+                    AbstractBlok* blok = (AbstractBlok*)item;
+
+                    if(blok->getTip().startsWith("Start"))
+                    {
+                           _pocetak=blok;
+                    }
+                }
+        }
+
+    //==== Korak 2 - Obrada ====
+    //Za sada samo prolaz i nista vise
+
+    //Ako nema Start
+    if(_pocetak==NULL)
+        {
+            QMessageBox::information(0, tr("Algovertor"), tr("Ne mogu da nadjem blok START!") );
+            return " ";
+        }
+
+    _kod.append(_pocetak->getTip()+"\n"); //Dodamo start
+
+    //Ako je Start povezan
+
+    if(_pocetak->levaVeza()!=NULL)
+        {
+            _pom=_pocetak->levaVeza()->childBlok();
+        }
+    else
+        {
+            return _kod;
+        }
+
+    //Obrada
+    while(_pom!=NULL || !_pom->getTip().startsWith("Stop"))
+        {
+
+            if(_pom->getTip()!="Stop")
+                {
+                   _kod.append(_pom->getTip()+" : "+_pom->getText()+"\n"); //Da prikaze sve (Tip + Text)
+                }
+            else
+                {
+                    _kod.append(_pom->getTip()+"\n");  //Da prikaze samo tip
+                }
+
+
+            if(_pom->levaVeza()!=NULL)
+                {
+                    _pom=_pom->levaVeza()->childBlok();
+                }
+            else
+                {
+                    _pom=NULL;
+                }
+        }
+
+
+    //=== Korak 3 - Vracanje podataka ===
+
+    return _kod;
 }
 
 void GScena::mousePressEvent(QGraphicsSceneMouseEvent *event)

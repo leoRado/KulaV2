@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     bizlaz.cpp \
     bobrada.cpp \
     buslov.cpp \
-    bcvor.cpp
+    bcvor.cpp \
+    bfor.cpp
 
 HEADERS  += aplikacija.h \
     abstractblok.h \
@@ -38,6 +39,7 @@ HEADERS  += aplikacija.h \
     bizlaz.h \
     bobrada.h \
     buslov.h \
-    bcvor.h
+    bcvor.h \
+    bfor.h
 
 FORMS    += aplikacija.ui

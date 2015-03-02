@@ -20,6 +20,7 @@ class AbstractStrelica : public QGraphicsLineItem
 {
 public:
 
+   AbstractStrelica();
    AbstractStrelica(AbstractBlok* blokA,AbstractBlok* blokB);
    enum { Type = UserType + 4 };
 

@@ -29,15 +29,11 @@ _scena->setStart();
 
 void Aplikacija::on_pushButton_2_clicked()
 {
-  AbstractBlok* A = (AbstractBlok*)_scena->items().at(0);
-  AbstractBlok* B = (AbstractBlok*)_scena->items().at(1);
+  AbstractBlok* A = (AbstractBlok*)_scena->items().at(1);
+  AbstractBlok* B = (AbstractBlok*)_scena->items().at(0);
 
-
-
-                           SObicna* _strelica = new SObicna(A,B);
-
-                           _scena->addItem(_strelica);
-
+  SObicna* _strelica = new SObicna(A,B);
+  _scena->addItem(_strelica);
 }
 
 void Aplikacija::on_actionSacuvaj_triggered()
@@ -73,4 +69,14 @@ void Aplikacija::on_pushButton_7_clicked()
 void Aplikacija::on_pushButton_8_clicked()
 {
     _scena->setCvor();
+}
+
+void Aplikacija::on_pushButton_9_clicked()
+{
+    _scena->setFor();
+}
+
+void Aplikacija::on_pushButton_10_clicked()
+{
+    ui->textEdit->setText(_scena->getKod());
 }

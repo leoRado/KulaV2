@@ -6,9 +6,10 @@ AbstractBlok::AbstractBlok()
 {
     setFlags(ItemIsMovable | ItemIsSelectable | ItemSendsGeometryChanges);
 
-    _levoDete=0;
-    _desnoDete=0;
-    _parentBlok=0;
+    _levoDete=NULL;
+    _desnoDete=NULL;
+    _parentBlok=NULL;
+    _padding=11;
 }
 
 AbstractBlok::~AbstractBlok()
@@ -71,23 +72,24 @@ void AbstractBlok::obrisiStrelicu(bool dete)
 {
     if(dete)
     {
-       _levoDete=0;
+       _levoDete=NULL;
     }
     else
     {
-        _desnoDete=0;
+        _desnoDete=NULL;
     }
 }
 
 void AbstractBlok::obrisiStrelice()
 {
-   _levoDete=0;
-   _desnoDete=0;
+   _levoDete=NULL;
+   _desnoDete=NULL;
+   _parentBlok=NULL;
 }
 
 void AbstractBlok::obrisiParentBlok()
 {
-    _parentBlok=0;
+    _parentBlok=NULL;
 }
 
 AbstractStrelica*AbstractBlok::levaVeza() const
@@ -135,10 +137,10 @@ QVariant AbstractBlok::itemChange(QGraphicsItem::GraphicsItemChange change, cons
 
 QRectF AbstractBlok::outlineRect() const
 {
-    const int Padding = 8;
+    //const int _padding = 10;
     QFontMetricsF metrics = qApp->fontMetrics();
     QRectF rect = metrics.boundingRect(this->_tekst);
-    rect.adjust(-Padding, -Padding, +Padding, +Padding);
+    rect.adjust(-_padding, -_padding, +_padding, +_padding);
     rect.translate(-rect.center());
     return rect;
 }

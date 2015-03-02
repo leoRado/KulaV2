@@ -79,6 +79,9 @@ protected:
     QColor  _tekstBoja;
     QColor  _pozadinaBoja;
     QColor  _linijaBoja;
+
+    int _padding;
+
 };
 
 #endif // ABSTRACTBLOK_H

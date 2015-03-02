@@ -30,14 +30,17 @@ public:
     void setObrada();
     void setUslov();
     void setCvor();
-
-  //  void setFor();
+    void setFor();
   //  void setWhile();
   //  void setDoWhile();
 
-   //Metode za cuvanje dokumenta u binarnu datoteku
+   //Metode za cuvanje dokumenta
     void sacuvaj ();
     void obradiListu();
+
+    //Metode za konverziju dijagrama u kod
+
+    QString getKod();
 
 signals:
 

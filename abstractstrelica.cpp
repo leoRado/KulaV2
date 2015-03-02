@@ -2,6 +2,12 @@
 #include <QPen>
 
 
+AbstractStrelica::AbstractStrelica()
+{
+    this->_blokA=NULL;
+    this->_blokB=NULL;
+}
+
 AbstractStrelica::AbstractStrelica(AbstractBlok *blokA, AbstractBlok *blokB)
 {
     QPen _pen(Qt::black,1.0);

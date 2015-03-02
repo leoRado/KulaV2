@@ -14,6 +14,8 @@ BCvor::BCvor(QString ime, QPoint lokacija)
     this->_linijaBoja=QColor(64,64,64,255);
 
     this->setPos(lokacija);
+
+    this->_padding=6;
 }
 
 QPainterPath BCvor::shape() const
