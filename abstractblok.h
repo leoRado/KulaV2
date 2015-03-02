@@ -56,7 +56,7 @@ public:
     AbstractBlok *parentBlok() const;                   //Parent
 
     //Metode za proveru da li je blok povezan
-    bool jePovezan(AbstractBlok* blok);
+    bool vezanZa(AbstractBlok* blok);
     bool imaVezu();
 
 protected:
