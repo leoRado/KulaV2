@@ -141,7 +141,7 @@ QString GScena::getKod()
         }
 
     //Obrada
-    while(_pom!=NULL || !_pom->getTip().startsWith("Stop"))
+    while(_pom!=NULL)
         {
 
             if(_pom->getTip()!="Stop")
@@ -151,6 +151,7 @@ QString GScena::getKod()
             else
                 {
                     _kod.append(_pom->getTip()+"\n");  //Da prikaze samo tip
+                    return _kod; //Stigo je do kraja
                 }
 
 
@@ -163,7 +164,6 @@ QString GScena::getKod()
                     _pom=NULL;
                 }
         }
-
 
     //=== Korak 3 - Vracanje podataka ===
 

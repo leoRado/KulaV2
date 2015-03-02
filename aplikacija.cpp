@@ -78,5 +78,7 @@ void Aplikacija::on_pushButton_9_clicked()
 
 void Aplikacija::on_pushButton_10_clicked()
 {
-    ui->textEdit->setText(_scena->getKod());
+    ui->plainTextEdit->clear();
+    ui->plainTextEdit->insertPlainText(_scena->getKod());
+
 }

@@ -213,13 +213,13 @@
         <string>Elementi</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="textEdit">
+      <widget class="QPlainTextEdit" name="plainTextEdit">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>60</y>
          <width>131</width>
-         <height>201</height>
+         <height>211</height>
         </rect>
        </property>
       </widget>
