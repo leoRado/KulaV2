@@ -31,8 +31,8 @@ public:
     void setUslov();
     void setCvor();
     void setFor();
-  //  void setWhile();
-  //  void setDoWhile();
+    void setWhile();
+    void setDoWhile();
 
    //Metode za cuvanje dokumenta
     void sacuvaj ();

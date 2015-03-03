@@ -82,3 +82,13 @@ void Aplikacija::on_pushButton_10_clicked()
     ui->plainTextEdit->insertPlainText(_scena->getKod());
 
 }
+
+void Aplikacija::on_pushButton_11_clicked()
+{
+    _scena->setWhile();
+}
+
+void Aplikacija::on_pushButton_12_clicked()
+{
+    _scena->setDoWhile();
+}

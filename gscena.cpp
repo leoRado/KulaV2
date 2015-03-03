@@ -22,6 +22,8 @@
 #include "buslov.h"
 #include "bfor.h"
 #include "bcvor.h"
+#include "bwhile.h"
+#include "bdowhile.h"
 
 GScena::GScena(QObject *parent) : QGraphicsScene(parent)
 {
@@ -76,6 +78,16 @@ void GScena::setCvor()
 void GScena::setFor()
 {
     this->_blokHolder=new BFor("For"+brojac);
+}
+
+void GScena::setWhile()
+{
+    this->_blokHolder=new BWhile("While"+brojac);
+}
+
+void GScena::setDoWhile()
+{
+    this->_blokHolder=new BDoWhile("DoWhile"+brojac);
 }
 
 void GScena::obradiListu()
