@@ -84,7 +84,6 @@ void AbstractBlok::obrisiStrelice()
 {
    _levoDete=NULL;
    _desnoDete=NULL;
-   _parentBlok=NULL;
 }
 
 void AbstractBlok::obrisiParentBlok()
@@ -107,7 +106,7 @@ AbstractBlok *AbstractBlok::parentBlok() const
     return _parentBlok;
 }
 
-bool AbstractBlok::jePovezan(AbstractBlok* blok)
+bool AbstractBlok::vezanZa(AbstractBlok* blok)
 {
     if(_levoDete->childBlok()==blok || _desnoDete->childBlok()==blok)
         {

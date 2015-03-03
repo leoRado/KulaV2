@@ -140,13 +140,39 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>340</y>
+         <y>320</y>
          <width>99</width>
          <height>41</height>
         </rect>
        </property>
        <property name="text">
         <string>Blok For</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_11">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>360</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok While</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_12">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>400</y>
+         <width>99</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Blok DoWhile</string>
        </property>
       </widget>
      </widget>

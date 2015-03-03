@@ -22,6 +22,8 @@
 #include "buslov.h"
 #include "bfor.h"
 #include "bcvor.h"
+#include "bwhile.h"
+#include "bdowhile.h"
 
 GScena::GScena(QObject *parent) : QGraphicsScene(parent)
 {
@@ -78,6 +80,16 @@ void GScena::setFor()
     this->_blokHolder=new BFor("For"+brojac);
 }
 
+void GScena::setWhile()
+{
+    this->_blokHolder=new BWhile("While"+brojac);
+}
+
+void GScena::setDoWhile()
+{
+    this->_blokHolder=new BDoWhile("DoWhile"+brojac);
+}
+
 void GScena::obradiListu()
 {
     /*
@@ -123,21 +135,16 @@ QString GScena::getKod()
     //Ako nema Start
     if(_pocetak==NULL)
         {
-            QMessageBox::information(0, tr("Algovertor"), tr("Ne mogu da nadjem blok START!") );
+            QMessageBox::warning(0, tr("Algovertor"), tr("Dijagram mora najpre da se započne blokom START!") );
             return " ";
         }
 
     _kod.append(_pocetak->getTip()+"\n"); //Dodamo start
 
     //Ako je Start povezan
-
     if(_pocetak->levaVeza()!=NULL)
         {
             _pom=_pocetak->levaVeza()->childBlok();
-        }
-    else
-        {
-            return _kod;
         }
 
     //Obrada
@@ -165,9 +172,9 @@ QString GScena::getKod()
                 }
         }
 
-    //=== Korak 3 - Vracanje podataka ===
-
-    return _kod;
+    //Posto nismo dosli do bloka stop
+    QMessageBox::warning(0, tr("Algovertor"), tr("Dijagram mora da se započne blokom START, a završi blokom STOP!") );
+    return " ";
 }
 
 void GScena::mousePressEvent(QGraphicsSceneMouseEvent *event)
