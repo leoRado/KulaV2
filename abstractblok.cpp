@@ -6,10 +6,13 @@ AbstractBlok::AbstractBlok()
 {
     setFlags(ItemIsMovable | ItemIsSelectable | ItemSendsGeometryChanges);
 
-    _levoDete=NULL;
-    _desnoDete=NULL;
-    _parentBlok=NULL;
-    _padding=11;
+    _levoDete = NULL;
+    _desnoDete = NULL;
+    this-> _parentBlok = NULL;
+    this->next = NULL;
+    _padding = 11;
+    this->nextNumber = -1;
+    this->parentNumber = -1;
 }
 
 AbstractBlok::~AbstractBlok()
@@ -51,21 +54,23 @@ QRectF AbstractBlok::boundingRect() const
     return outlineRect().adjusted(-Margin, -Margin, +Margin, +Margin);
 }
 
-void AbstractBlok::dodajStrelicu(bool dete,AbstractStrelica *strelica)
+void AbstractBlok::dodajStrelicu(AbstractBlok *blok)
 {
-    if(dete)
+    this->next = blok;
+
+    /*if(dete)
     {
         _levoDete=strelica;
     }
     else
     {
         _desnoDete=strelica;
-    }
+    }*/
 }
 
 void AbstractBlok::dodajParentBlok(AbstractBlok *blok)
 {
-   _parentBlok=blok;
+   _parentBlok = blok;
 }
 
 void AbstractBlok::obrisiStrelicu(bool dete)
@@ -144,3 +149,58 @@ QRectF AbstractBlok::outlineRect() const
     return rect;
 }
 
+int AbstractBlok::getNextNumber()
+{
+    return this->nextNumber;
+}
+
+void AbstractBlok::setNextNumber(int number)
+{
+    this->nextNumber = number;
+}
+
+AbstractBlok* AbstractBlok::getNext()
+{
+    return this->next;
+}
+
+AbstractBlok* AbstractBlok::getParent()
+{
+    return this->_parentBlok;
+}
+
+bool AbstractBlok::isParentFull()
+{
+    if(this->_parentBlok == NULL)
+        return false;
+    else
+        return true;
+}
+
+bool AbstractBlok::isNextFull()
+{
+    if(this->next == NULL)
+        return false;
+    else
+        return true;
+}
+
+int AbstractBlok::getParentNumber()
+{
+    return this->parentNumber;
+}
+
+void AbstractBlok::setParentNumber(int number)
+{
+    this->parentNumber = number;
+}
+
+void AbstractBlok::deleteParent()
+{
+    this->_parentBlok = NULL;
+}
+
+void AbstractBlok::deleteNext()
+{
+    this->next = NULL;
+}

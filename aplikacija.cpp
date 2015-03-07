@@ -2,6 +2,7 @@
 #include "ui_aplikacija.h"
 #include "bstart.h"
 #include "sobicna.h"
+#include "codedialog.h"
 
 #include <QSaveFile>
 
@@ -11,7 +12,7 @@ Aplikacija::Aplikacija(QWidget *parent) :
     ui(new Ui::Aplikacija)
 {
     ui->setupUi(this);
-    _scena=new GScena();
+    _scena = new GScena();
     _scena->setSceneRect(0,0,3000,3000);
     ui->graphicsView->setScene(_scena);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing,true);
@@ -29,11 +30,14 @@ _scena->setStart();
 
 void Aplikacija::on_pushButton_2_clicked()
 {
-  AbstractBlok* A = (AbstractBlok*)_scena->items().at(1);
+    this->_scena->stanje = "Povezi";
+
+
+  /*AbstractBlok* A = (AbstractBlok*)_scena->items().at(1);
   AbstractBlok* B = (AbstractBlok*)_scena->items().at(0);
 
   SObicna* _strelica = new SObicna(A,B);
-  _scena->addItem(_strelica);
+  _scena->addItem(_strelica);*/
 }
 
 void Aplikacija::on_actionSacuvaj_triggered()
@@ -91,4 +95,11 @@ void Aplikacija::on_pushButton_11_clicked()
 void Aplikacija::on_pushButton_12_clicked()
 {
     _scena->setDoWhile();
+}
+
+void Aplikacija::on_convertButton_clicked()
+{
+    CodeDialog* newDialog = new CodeDialog();
+    newDialog->setText("Test");
+    newDialog->show();
 }

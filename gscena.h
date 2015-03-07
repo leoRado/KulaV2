@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsScene>
 #include "abstractblok.h"
+#include <QCursor>
 
 /* =====================================================
  * KLASA: GScena
@@ -34,6 +35,9 @@ public:
     void setWhile();
     void setDoWhile();
 
+    int addToScene(QGraphicsItem* item);
+    void removeFromScene(int index);
+
    //Metode za cuvanje dokumenta
     void sacuvaj ();
     void obradiListu();
@@ -41,6 +45,10 @@ public:
     //Metode za konverziju dijagrama u kod
 
     QString getKod();
+    QString stanje;
+
+    QString convertToCode();
+
 
 signals:
 
@@ -50,6 +58,8 @@ protected:
 
     //Metoda koja se izvrsava na MouseClick
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent (QGraphicsSceneMouseEvent *event);
 
     void keyPressEvent(QKeyEvent *event);
 
@@ -57,6 +67,16 @@ private:
     //Promenljive
     QGraphicsItem * _blokHolder;
     int brojac=0; //Brojac elemenata
+    AbstractBlok *prviSelektovaniObjekat;
+    AbstractBlok *drugiSelektovaniObjekat;
+
+    AbstractBlok* start;
+
+
+    QGraphicsItem** grafickaScena;
+    int top;
+    int max;
+
 };
 
 #endif // GSCENA_H

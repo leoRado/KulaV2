@@ -12,10 +12,11 @@ AbstractStrelica::AbstractStrelica(AbstractBlok *blokA, AbstractBlok *blokB)
 {
     QPen _pen(Qt::black,1.0);
     setPen(_pen);
-    this->_blokA=blokA;
-    this->_blokB=blokB;
+    this->_blokA = blokA;
+    this->_blokB = blokB;
 
-    _blokA->dodajStrelicu(true,this);
+
+    _blokA->dodajStrelicu(_blokB);
     _blokB->dodajParentBlok(_blokA);
 
     setFlags(QGraphicsItem::ItemIsSelectable);
@@ -52,6 +53,11 @@ AbstractBlok*AbstractStrelica::parentBlok() const
 }
 
 AbstractBlok*AbstractStrelica::childBlok() const
+{
+    return _blokB;
+}
+
+AbstractBlok*AbstractStrelica::getBlockB()
 {
     return _blokB;
 }

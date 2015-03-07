@@ -32,6 +32,17 @@ public:
     QString getTip();                     //Metoda za preuzimanje tipa bloka
     QString getIme();
     QString getVeza();
+    int getNextNumber();
+    void setNextNumber(int number);
+    int getParentNumber();
+    void setParentNumber(int number);
+    AbstractBlok* getNext();
+    AbstractBlok* getParent();
+    bool isParentFull();
+    bool isNextFull();
+
+    void deleteParent();
+    void deleteNext();
 
     QRectF boundingRect() const;
 
@@ -42,7 +53,7 @@ public:
     virtual void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)=0;
 
     //Metode za povezivanje blokova
-    void dodajStrelicu(bool dete,AbstractStrelica  *strelica);
+    void dodajStrelicu(AbstractBlok  *blok);
     void dodajParentBlok(AbstractBlok* blok);
 
     void obrisiStrelicu(bool dete);
@@ -69,6 +80,7 @@ protected:
     //Promenljive
 
     AbstractBlok* _parentBlok;
+    AbstractBlok* next;
     AbstractStrelica* _levoDete;
     AbstractStrelica* _desnoDete;
 
@@ -81,6 +93,8 @@ protected:
     QColor  _linijaBoja;
 
     int _padding;
+    int nextNumber;
+    int parentNumber;
 
 };
 

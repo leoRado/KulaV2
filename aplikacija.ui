@@ -249,6 +249,19 @@
         </rect>
        </property>
       </widget>
+      <widget class="QPushButton" name="convertButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>320</y>
+         <width>101</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Convert</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -259,7 +272,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDatoteka">

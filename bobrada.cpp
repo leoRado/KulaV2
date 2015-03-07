@@ -16,6 +16,20 @@ BObrada::BObrada(QString ime, QPoint lokacija)
     this->setPos(lokacija);
 }
 
+BObrada::BObrada()
+{
+    this->_tip="Obrada";
+    this->_ime= "Obrada";
+    this->_tekst=" <podaci> ";
+
+
+    this->_tekstBoja=QColor(0,0,0,255);
+    this->_pozadinaBoja=QColor(153,204,255,255);
+    this->_linijaBoja=QColor(0,128,255,255);
+
+    //this->setPos(lokacija);
+}
+
 QPainterPath BObrada::shape() const
 {
     QRectF rect = outlineRect();

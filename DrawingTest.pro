@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     bcvor.cpp \
     bfor.cpp \
     bwhile.cpp \
-    bdowhile.cpp
+    bdowhile.cpp \
+    codedialog.cpp
 
 HEADERS  += aplikacija.h \
     abstractblok.h \
@@ -44,6 +45,8 @@ HEADERS  += aplikacija.h \
     bcvor.h \
     bfor.h \
     bwhile.h \
-    bdowhile.h
+    bdowhile.h \
+    codedialog.h
 
-FORMS    += aplikacija.ui
+FORMS    += aplikacija.ui \
+    codedialog.ui

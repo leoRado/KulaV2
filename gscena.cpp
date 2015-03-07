@@ -24,15 +24,35 @@
 #include "bcvor.h"
 #include "bwhile.h"
 #include "bdowhile.h"
+#include "sobicna.h"
+#include "aplikacija.h"
+
+#include <QMessageBox>
+#include <QApplication>
+#include <iostream>
+using namespace std;
 
 GScena::GScena(QObject *parent) : QGraphicsScene(parent)
 {
-    this->_blokHolder=NULL;
+    this->_blokHolder = NULL;
+    this->stanje = "";
+
+    this->max = 50;
+    this->grafickaScena = new QGraphicsItem* [this->max];
+    this->top = 0;
+
+    this->drugiSelektovaniObjekat = NULL;
+    this->prviSelektovaniObjekat = NULL;
+
+    this->start = NULL;
 }
 
 GScena::~GScena()
 {
     delete _blokHolder;
+    for(int i = 0; i<this->max; i++)
+        delete this->grafickaScena[i];
+    delete[] this->grafickaScena;
 }
 
 void GScena::setBlok(AbstractBlok *blok)
@@ -52,17 +72,18 @@ void GScena::setStop()
 
 void GScena::setUlaz()
 {
-    this->_blokHolder=new BUlaz("Ulaz"+brojac);
+    this->_blokHolder = new BUlaz("Ulaz"+brojac);
 }
 
 void GScena::setIzlaz()
 {
-    this->_blokHolder=new BIzlaz("Izlaz"+brojac);
+    this->_blokHolder=new BIzlaz("Izlaz" + brojac);
 }
 
 void GScena::setObrada()
 {
-    this->_blokHolder=new BObrada("Obrada"+brojac);
+    this->_blokHolder = NULL;
+    this->_blokHolder = new BObrada("Obrada" + brojac);
 }
 
 void GScena::setUslov()
@@ -87,7 +108,7 @@ void GScena::setWhile()
 
 void GScena::setDoWhile()
 {
-    this->_blokHolder=new BDoWhile("DoWhile"+brojac);
+    this->_blokHolder=new BDoWhile("DoWhile" + brojac);
 }
 
 void GScena::obradiListu()
@@ -179,15 +200,233 @@ QString GScena::getKod()
 
 void GScena::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-   if(_blokHolder!=NULL)
-   {
-    _blokHolder->setPos(event->scenePos());
-     addItem(_blokHolder);
-     brojac++;
-    _blokHolder=NULL;
-   }
+    if(event->button() == Qt::RightButton){
+        AbstractBlok* X = (AbstractBlok*) this->itemAt(event->scenePos().x(), event->scenePos().y(), QTransform());
+        QString tmpString = "Blok: ";
+        tmpString += X->getTip();
+        tmpString += "\n Parent: ";
+        tmpString += X->getParent()->getTip();
+        tmpString += "\n Next: ";
+        tmpString += X->getNext()->getTip();
+        QMessageBox::information(NULL, "Test", tmpString);
+        delete X;
+        return;
+    }
 
-   QGraphicsScene::mousePressEvent(event);
+    if(this->stanje == "Povezi")
+    {
+        QGraphicsItem* tmp;
+        if(this->prviSelektovaniObjekat == NULL)
+        {
+            tmp = this->itemAt(event->scenePos().x(), event->scenePos().y(), QTransform());
+            if(tmp != 0)
+                this->prviSelektovaniObjekat = (AbstractBlok*)tmp;
+            else
+            {
+                this->prviSelektovaniObjekat = NULL;
+                this->drugiSelektovaniObjekat = NULL;
+                this->stanje = "Move";
+                return;
+            }
+        }
+        else
+        {
+            tmp = this->itemAt(event->scenePos().x(), event->scenePos().y(), QTransform());
+            if(tmp != 0)
+                 this->drugiSelektovaniObjekat = (AbstractBlok*)tmp;
+            else
+            {
+                this->prviSelektovaniObjekat = NULL;
+                this->drugiSelektovaniObjekat = NULL;
+                this->stanje = "Move";
+                return;
+            }
+
+
+            SObicna* _strelica;
+
+            if(this->prviSelektovaniObjekat->isParentFull())
+            {
+                /*if(this->prviSelektovaniObjekat->isNextFull())
+                {
+                    this->removeItem( this->grafickaScena[this->prviSelektovaniObjekat->getParentNumber()] );
+                    this->prviSelektovaniObjekat->deleteParent();
+                }*/
+
+                _strelica = new SObicna( this->prviSelektovaniObjekat, this->drugiSelektovaniObjekat );
+                this->addItem(_strelica);
+                int tmpIndex = this->addToScene(_strelica);
+                this->prviSelektovaniObjekat->setNextNumber(tmpIndex);
+                this->drugiSelektovaniObjekat->setParentNumber(tmpIndex);
+
+            }
+
+            if(!this->prviSelektovaniObjekat->isParentFull())
+            {
+                if(this->drugiSelektovaniObjekat->isNextFull())
+                {
+                    this->removeItem( this->grafickaScena[this->drugiSelektovaniObjekat->getNextNumber()] );
+                    this->drugiSelektovaniObjekat->deleteNext();
+                }
+
+                _strelica = new SObicna( this->drugiSelektovaniObjekat, this->prviSelektovaniObjekat) ;
+                this->addItem(_strelica);
+                int tmpIndex = this->addToScene(_strelica);
+                this->prviSelektovaniObjekat->setParentNumber(tmpIndex);
+                this->drugiSelektovaniObjekat->setNextNumber(tmpIndex);
+            }
+
+            this->prviSelektovaniObjekat = NULL;
+            this->drugiSelektovaniObjekat = NULL;
+            this->stanje = "Move";
+            return;
+
+
+
+            /*if(this->tmpHolder->getTip() == "Stop")
+            {
+                if(this->tmpHolder->isParentFull()){
+                    this->removeItem( this->grafickaScena[this->tmpHolder->getParentNumber()] );
+                    this->tmpHolder->setParentNumber(-1);
+                    this->tmpHolder->deleteParent();
+                }
+
+                if(B->isParentFull()){
+                    this->removeItem( this->grafickaScena[B->getParentNumber()] );
+                    B->setParentNumber(-1);
+                    B->deleteParent();
+                }
+
+                _strelica = new SObicna(B, this->tmpHolder);
+                this->addItem(_strelica);
+                int tmpIndex = this->addToScene(_strelica);
+                this->tmpHolder->setParentNumber(tmpIndex);
+                B->setNextNumber(tmpIndex);
+                this->tmpHolder = NULL;
+                B = NULL;
+                _strelica = NULL;
+                this->stanje = "Move";
+                return;
+            }
+
+            if(this->tmpHolder->isParentFull() && B->isNextFull())
+            {
+                if(this->tmpHolder->isParentFull()){
+                    this->removeItem( this->grafickaScena[this->tmpHolder->getParentNumber()] );
+                    this->tmpHolder->setParentNumber(-1);
+                    this->tmpHolder->deleteParent();
+                }
+
+                if(B->isNextFull()){
+                    this->removeItem( this->grafickaScena[B->getNextNumber()] );
+                    B->setNextNumber(-1);
+                    B->deleteNext();
+                }
+
+                _strelica = new SObicna(B, this->tmpHolder);
+                this->addItem(_strelica);
+                int tmpIndex = this->addToScene(_strelica);
+                this->tmpHolder->setParentNumber(tmpIndex);
+                B->setNextNumber(tmpIndex);
+                this->tmpHolder = NULL;
+                B = NULL;
+                _strelica = NULL;
+                this->stanje = "Move";
+                return;
+            }
+
+            if(this->tmpHolder->isParentFull() || this->tmpHolder->getTip() == "Start"){
+
+                if(this->tmpHolder->isNextFull()){
+                    this->removeItem( this->grafickaScena[this->tmpHolder->getNextNumber()] );
+                    this->tmpHolder->setNextNumber(-1);
+                    this->tmpHolder->deleteNext();
+                }
+
+                if(B->isParentFull()){
+                    this->removeItem( this->grafickaScena[B->getParentNumber()] );
+                    B->setParentNumber(-1);
+                    B->deleteParent();
+                }
+
+                _strelica = new SObicna(this->tmpHolder, B);
+                this->addItem(_strelica);
+                int tmpIndex = this->addToScene(_strelica);
+
+                this->tmpHolder->setNextNumber(tmpIndex);
+                B->setParentNumber(tmpIndex);
+
+                this->tmpHolder = NULL;
+                B = NULL;
+                _strelica = NULL;
+                this->stanje = "Move";
+                return;
+            }
+
+            if(B->isParentFull()){
+
+                if(this->tmpHolder->isParentFull()){
+                    this->removeItem( this->grafickaScena[this->tmpHolder->getParentNumber()] );
+                    this->tmpHolder->setParentNumber(-1);
+                    this->tmpHolder->deleteParent();
+                }
+
+                if(B->isNextFull()){
+                    this->removeItem( this->grafickaScena[B->getNextNumber()] );
+                    B->setNextNumber(-1);
+                    B->deleteNext();
+                }
+
+                _strelica = new SObicna(B, this->tmpHolder);
+                this->addItem(_strelica);
+                int tmpIndex = this->addToScene(_strelica);
+                this->tmpHolder->setParentNumber(tmpIndex);
+                B->setNextNumber(tmpIndex);
+                this->tmpHolder = NULL;
+                B = NULL;
+                _strelica = NULL;
+                this->stanje = "Move";
+                return;
+            }*/
+        }
+    }
+    else{
+       if(this->_blokHolder != NULL)
+       {
+        _blokHolder->setPos(event->scenePos());   
+        if(this->addToScene(_blokHolder) != -1)
+        {
+            addItem(_blokHolder);
+        }
+        _blokHolder=NULL;
+        this->stanje = "Move";
+        return;
+       }
+    }
+
+    if(this->stanje == "Move")
+    {
+        QGraphicsScene::mousePressEvent(event);
+    }
+
+    /*
+    for(int i=0; i<this->items().length(); i++)
+    {
+        AbstractBlok* tmpPrint = NULL;
+        tmpPrint = (AbstractBlok *)this->items().at(i);
+        if(tmpPrint != NULL)
+            cout << i << ". " << (char *) tmpPrint->getIme().toLocal8Bit().data() << endl;
+    }
+    cout << "-------------------" << endl;*/
+}
+void GScena::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsScene::mouseMoveEvent(event);
+}
+
+void GScena::mouseReleaseEvent (QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsScene::mouseReleaseEvent(event);
 }
 
 void GScena::keyPressEvent(QKeyEvent *event)
@@ -286,5 +525,42 @@ void GScena::sacuvaj() {
              out << blok->getTip() <<blok->getIme() << blok->getText() <<blok->getVeza() << blok->getVeza();
           }
     }
+}
+
+int GScena::addToScene(QGraphicsItem *item)
+{
+    if(this->top > this->max)
+    {
+        this->max += 20;
+        QGraphicsItem** tmp = new QGraphicsItem* [this->top];
+        for(int i = 0; i<this->top; i++){
+            tmp[i] = this->grafickaScena[i];
+            delete this->grafickaScena[i];
+        }
+        for(int i = 0; i<this->top; i++)
+            delete tmp[i];
+        delete[] tmp;
+
+        this->grafickaScena = new QGraphicsItem* [this->max];
+    }
+
+    this->grafickaScena[this->top] = item;
+    int tmpOut = this->top;
+    this->top++;
+
+    return tmpOut;
+}
+
+void GScena::removeFromScene(int index)
+{
+    if(index < 0)
+        return;
+    this->grafickaScena[index] = NULL;
+}
+
+QString GScena::convertToCode()
+{
+    /*AbstractBlok* tmp =
+    while()*/
 }
 

@@ -17,6 +17,7 @@ class BObrada : public AbstractBlok
     public:
 
         BObrada(QString ime,QPoint lokacija=QPoint(0,0));
+        BObrada();
 
         QPainterPath shape() const;
 

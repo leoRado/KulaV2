@@ -44,7 +44,9 @@ private slots:
 
     void on_pushButton_12_clicked();
 
-    private:
+    void on_convertButton_clicked();
+
+private:
     Ui::Aplikacija *ui;
     GScena* _scena;
 };

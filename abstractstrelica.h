@@ -34,6 +34,7 @@ public:
     virtual void nacrtajVezu()=0;
 
     QRectF boundingRect() const;
+    AbstractBlok* getBlockB();
 
 protected:
 
